@@ -22,7 +22,6 @@ export const handler = async (event) => {
   let newsUrl = "";
   try {
     if (event.body) {
-      // Parse string or object body safely
       const body = typeof event.body === "string" ? JSON.parse(event.body) : event.body;
       newsUrl = body.url;
     }
@@ -42,7 +41,6 @@ export const handler = async (event) => {
   }
 
   try {
-    // Fetch the article text
     const res = await fetch(`https://r.jina.ai/${newsUrl}`);
     if (!res.ok) {
       return {
@@ -57,7 +55,6 @@ export const handler = async (event) => {
 
     const articleText = await res.text();
 
-    // Prepare prompt for OpenAI
     const prompt = `Summarize the following news article in 3 concise sentences:\n\n${articleText.slice(
       0,
       8000
